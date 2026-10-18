@@ -20,7 +20,7 @@ Full Stack Developer with 4 years of experience building web and mobile products
 
 ## Experience
 
-- **BeastCRM** — Frontend Developer Senior (2025–Present, remote): advanced frontend features, real-time WebSocket chat for private clients, performance optimization, and CRM maintenance.
+- **BeastCRM** — Full Stack Developer Senior (2025–Present, remote): advanced frontend features, real-time WebSocket chat for private clients, performance optimization, and CRM maintenance.
 - **Workflow Admin** — Full Stack Developer (2022–2025, remote): full design and development of an Amazon data extractor, RESTful APIs, MySQL optimization, and responsive interfaces with React and Vue.js.
 
 ## Contact
@@ -52,7 +52,7 @@ Desarrollador Full Stack con 4 años de experiencia construyendo productos web y
 
 ## Experiencia
 
-- **BeastCRM** — Frontend Developer Senior (2025–Presente, remoto): funcionalidades frontend avanzadas, chat en tiempo real con WebSockets para clientes privados, optimización de rendimiento y mantenimiento del CRM.
+- **BeastCRM** — Full Stack Developer Senior (2025–Presente, remoto): funcionalidades frontend avanzadas, chat en tiempo real con WebSockets para clientes privados, optimización de rendimiento y mantenimiento del CRM.
 - **Workflow Admin** — Full Stack Developer (2022–2025, remoto): diseño y desarrollo completo de un extractor de datos de Amazon, APIs RESTful, optimización de MySQL e interfaces responsivas con React y Vue.js.
 
 ## Contacto
