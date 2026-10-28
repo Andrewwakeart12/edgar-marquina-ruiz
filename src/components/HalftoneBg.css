@@ -1,0 +1,10 @@
+.halftone-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  pointer-events: none;
+  z-index: -3;
+  display: block;
+  opacity: 0.9;
+}

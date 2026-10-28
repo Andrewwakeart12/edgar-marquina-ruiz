@@ -1,0 +1,387 @@
+/* Variables por defecto (Modo Oscuro) */
+
+
+.obsiryte-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--obs-bg-main);
+  color: var(--obs-text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Top Bar */
+.obsiryte-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--obs-border-color);
+  background-color: var(--obs-bg-topbar);
+}
+
+.left-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--obs-text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.icon-btn:hover {
+  color: var(--obs-text-primary);
+  background-color: rgba(128, 128, 128, 0.15);
+}
+
+.active-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--obs-tab-active);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--obs-text-primary);
+}
+
+.close-tab-icon {
+  color: var(--obs-text-muted);
+  cursor: pointer;
+}
+
+.brand-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.right-controls {
+  display: flex;
+  gap: 8px;
+}
+
+/* Layout Body */
+.obsiryte-body {
+  display: flex;
+  flex: 1;
+}
+
+/* Main Editor Canvas */
+.obsiryte-editor {
+  flex: 1;
+  padding: 24px 48px 100px 48px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.doc-subheader {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.doc-title-small {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--obs-text-primary);
+}
+
+.doc-status {
+  font-size: 12px;
+  color: var(--obs-text-muted);
+}
+
+/* Character Card Box */
+.character-card-box {
+  background-color: var(--obs-bg-card);
+  border: 1px solid var(--obs-border-color);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.badge-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--obs-purple);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.character-name-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.purple-dot {
+  color: var(--obs-purple);
+  font-size: 20px;
+}
+
+.character-name-heading h1 {
+  font-size: 28px;
+  margin: 0;
+  font-weight: 700;
+  color: var(--obs-text-primary);
+}
+
+/* Apodos / Chips */
+.card-section {
+  margin-bottom: 16px;
+}
+
+.section-label {
+  display: block;
+  font-size: 11px;
+  color: var(--obs-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.chips-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background-color: var(--obs-purple-soft);
+  color: var(--obs-purple);
+  border: 1px solid var(--obs-purple);
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip-remove {
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.chip-add-btn {
+  background-color: transparent;
+  border: 1px dashed var(--obs-border-color);
+  color: var(--obs-purple);
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Properties Grid */
+.properties-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+  border-top: 1px solid var(--obs-border-color);
+  padding-top: 16px;
+}
+
+.property-row {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  gap: 8px;
+}
+
+.prop-bullet {
+  color: var(--obs-text-muted);
+}
+
+.prop-key {
+  color: var(--obs-text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  width: 120px;
+  letter-spacing: 0.5px;
+}
+
+.prop-value {
+  color: var(--obs-text-primary);
+}
+
+.highlight-badge {
+  color: var(--obs-purple);
+  font-weight: 600;
+}
+
+.quitar-ficha-btn {
+  background: transparent;
+  border: none;
+  color: var(--obs-text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 16px;
+  padding: 0;
+}
+
+.quitar-ficha-btn:hover {
+  color: #f87171;
+}
+
+/* Text Editor Area */
+.editor-content-area {
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.editor-heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--obs-text-primary);
+  margin-bottom: 8px;
+}
+
+.editor-paragraph {
+  color: var(--obs-text-primary);
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+/* Floating Formatting Toolbar */
+.floating-toolbar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--obs-toolbar-bg);
+  border: 1px solid var(--obs-border-color);
+  border-radius: 24px;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.floating-toolbar button {
+  background: transparent;
+  border: none;
+  color: var(--obs-text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+.floating-toolbar button:hover {
+  color: var(--obs-text-primary);
+  background-color: rgba(128, 128, 128, 0.15);
+}
+
+.toolbar-separator {
+  color: var(--obs-border-color);
+  font-size: 12px;
+}
+
+/* Right Sidebar & References */
+.obsiryte-sidebar {
+  width: 280px;
+  border-left: 1px solid var(--obs-border-color);
+  background-color: var(--obs-bg-sidebar);
+  padding: 16px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--obs-text-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.references-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reference-card-item {
+  background-color: var(--obs-card-hover);
+  border: 1px solid var(--obs-border-color);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12px;
+}
+
+.ref-company-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--obs-text-primary);
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.ref-dot {
+  color: var(--obs-purple);
+}
+
+.ref-role {
+  color: var(--obs-purple);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.ref-period {
+  color: var(--obs-text-muted);
+  font-size: 11px;
+}
+
+.ref-contact {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--obs-border-color);
+  color: var(--obs-text-muted);
+}
+
+.empty-references {
+  font-size: 13px;
+  color: var(--obs-text-muted);
+}
+
+@media (max-width: 900px) {
+  .obsiryte-sidebar {
+    display: none;
+  }
+  .obsiryte-editor {
+    padding: 16px;
+  }
+}
