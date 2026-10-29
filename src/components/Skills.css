@@ -84,10 +84,8 @@
 /* --- ESTILO FIGMA ARTBOARD / FRAME --- */
 .figma-artboard-wrapper {
   position: relative;
-  padding: 1.5rem 1rem 3rem 1rem;
-  background: color-mix(in srgb, var(--bg) 80%, black);
+  padding: 4.5rem 1rem 3rem 1rem;
   border-radius: calc(var(--radius) - 4px);
-  border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,18 +109,19 @@
   background: var(--surface);
   border: 2px solid #1177fe; /* Color azul clásico de selección de Figma */
   border-radius: 4px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  overflow: unset;
+
 }
 
 /* Tiradores de las esquinas del Frame de Figma */
 .figma-handle {
   position: absolute;
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
   background: var(--surface);
   border: 2px solid #1177fe;
   border-radius: 1px;
@@ -196,7 +195,7 @@
 /* Barra de herramientas flotante estilo Figma abajo */
 .figma-floating-toolbar {
   position: absolute;
-  bottom: 8px;
+  bottom: 1px;
   display: flex;
   gap: 4px;
   background: #1e1e1e;
@@ -292,7 +291,6 @@
 /* --- ESTILOS DEL CURSOR Y ELEMENTOS DINÁMICOS EN FIGMA --- */
 .figma-frame-canvas {
   position: relative;
-  overflow: hidden;
   min-height: 340px;
 }
 
@@ -465,4 +463,72 @@
   pointer-events: none;
   /* Transición fluida para que los cursores viajen de un punto a otro simulando movimiento real */
   transition: top 0.8s cubic-bezier(0.25, 1, 0.5, 1), left 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- ESTILOS DE INTERACCIÓN DE CURSORES --- */
+.figma-animated-cursor {
+  position: absolute;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+  transition: top 0.7s cubic-bezier(0.25, 1, 0.5, 1), left 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Efecto de clic (escala y ondas) */
+.figma-animated-cursor.clicking {
+  transform: scale(0.85);
+}
+
+.figma-animated-cursor.clicking::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  animation: clickWave 0.4s ease-out forwards;
+}
+
+.edgar.clicking::after { border-color: #1177fe; }
+.erika.clicking::after { border-color: #ec4899; }
+
+@keyframes clickWave {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* Resaltado visual cuando se está editando el texto */
+.highlight-editing {
+  color: #1177fe;
+  text-shadow: 0 0 10px rgba(17, 119, 254, 0.3);
+  transition: color 0.3s ease;
+}
+
+.highlight-tag {
+  background: color-mix(in srgb, #ec4899 20%, transparent) !important;
+  border-color: #ec4899 !important;
+  color: #ec4899 !important;
+  transition: all 0.3s ease;
+}
+
+.figma-interactive-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.figma-interactive-card:hover {
+  border-color: #1177fe;
+  box-shadow: 0 8px 24px rgba(17, 119, 254, 0.15);
+}
+.window-name{
+    position: absolute;
+    top: -30px;
+    left: -5px;
+    color: #1177fe;
+    font-weight: bold;
+
 }

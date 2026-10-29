@@ -15,31 +15,31 @@ import {
 } from "react-icons/fi";
 import "./Skills.css";
 
-// Perfiles predefinidos para la rotación automática y el clic manual
 const figmaProfiles = [
   {
     chip: "Component · Auto Layout",
     title: "Vue.js & React Ecosystem",
     desc: "Diseño de interfaces escalables, componentes reactivos y estados sincronizados.",
     tags: ["ES6+", "Responsive", "State Management"],
-    edgarPos: { x: 35, y: 35 },
-    erikaPos: { x: 70, y: 75 }
+    // Coordenadas donde se posicionan los cursores para este perfil
+    edgarPos: { x: 28, y: 38 }, // Sobre el título en edición
+    erikaPos: { x: 72, y: 68 }  // Sobre las etiquetas de especificación
   },
   {
     chip: "Frame · Canvas Engine",
     title: "Svelte 5 & Pixi.js Canvas",
     desc: "Renderizado gráfico 2D de alto rendimiento, vectores y layouts dinámicos.",
     tags: ["Canvas 2D", "Performance", "Svelte"],
-    edgarPos: { x: 50, y: 40 },
-    erikaPos: { x: 30, y: 70 }
+    edgarPos: { x: 32, y: 38 },
+    erikaPos: { x: 65, y: 68 }
   },
   {
     chip: "Design System · Multiplatform",
     title: "Kotlin & Android Architecture",
     desc: "Desarrollo de aplicaciones multiplataforma con flujos asíncronos y Ktor.",
     tags: ["KMP", "Compose", "Coroutines"],
-    edgarPos: { x: 60, y: 35 },
-    erikaPos: { x: 45, y: 80 }
+    edgarPos: { x: 35, y: 38 },
+    erikaPos: { x: 68, y: 68 }
   }
 ];
 
@@ -56,11 +56,13 @@ export default function Skills() {
   ]);
   const terminalBodyRef = useRef(null);
 
-  // --- ESTADOS FIGMA COLABORATIVO INTERACTIVO ---
-  const [figmaTool, setFigmaTool] = useState("select");
+  // --- ESTADOS FIGMA INTERACTIVO Y COLABORATIVO ---
+  const [figmaTool, setFigmaTool] = useState("text");
   const [profileIndex, setProfileIndex] = useState(0);
   const [typedTitle, setTypedTitle] = useState("");
   const [isManualOverride, setIsManualOverride] = useState(false);
+  const [edgarClicking, setEdgarClicking] = useState(false);
+  const [erikaClicking, setErikaClicking] = useState(false);
 
   const currentProfile = figmaProfiles[profileIndex];
 
@@ -123,7 +125,7 @@ export default function Skills() {
   }, [isInputFocused]);
 
   // -------------------------------------------------------------
-  // EFECTO DE TECLEO Y SINCRONIZACIÓN DE CURSORES EN FIGMA
+  // RUTINA DE EDICIÓN Y CURSORES ACTIVOS EN FIGMA
   // -------------------------------------------------------------
   useEffect(() => {
     if (activeTab !== "frontend" || isManualOverride) return;
@@ -131,38 +133,48 @@ export default function Skills() {
     let isCancelled = false;
     const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
-    const runFigmaSequence = async () => {
+    const runFigmaLiveEditing = async () => {
       while (!isCancelled) {
         const profile = figmaProfiles[profileIndex];
+        
+        // 1. Edgar hace clic para empezar a editar el texto
         setFigmaTool("text");
+        setEdgarClicking(true);
+        await delay(300);
+        setEdgarClicking(false);
 
-        // Simular tipeo letra por letra del título sincronizado con Edgar
+        // 2. Edgar escribe el título letra por letra de forma sincronizada
         setTypedTitle("");
         for (let i = 0; i <= profile.title.length; i++) {
           if (isCancelled || isManualOverride) return;
           setTypedTitle(profile.title.substring(0, i));
-          await delay(45);
+          await delay(50);
         }
 
-        setFigmaTool("select");
-        await delay(4000); // Pausa para que el usuario lea el perfil activo
+        // 3. Erika interactúa haciendo clic en las etiquetas simultáneamente
+        await delay(400);
+        setErikaClicking(true);
+        await delay(400);
+        setErikaClicking(false);
+
+        await delay(3500); // Pausa para visualización
 
         if (isCancelled || isManualOverride) break;
-        // Pasar al siguiente perfil cíclicamente
+        // Rotar al siguiente perfil
         setProfileIndex((prev) => (prev + 1) % figmaProfiles.length);
       }
     };
 
-    runFigmaSequence();
+    runFigmaLiveEditing();
     return () => { isCancelled = true; };
   }, [activeTab, profileIndex, isManualOverride]);
 
-  // Manejo de clic manual por parte del usuario en el componente de Figma
-  const handleFigmaCardClick = () => {
-    setIsManualOverride(true); // Pausa la animación automática temporalmente
-    const nextIndex = (profileIndex + 1) % figmaProfiles.length;
-    setProfileIndex(nextIndex);
-    setTypedTitle(figmaProfiles[nextIndex].title);
+  // Clic manual en la tarjeta por parte del usuario real
+  const handleCardClick = () => {
+    setIsManualOverride(true);
+    const next = (profileIndex + 1) % figmaProfiles.length;
+    setProfileIndex(next);
+    setTypedTitle(figmaProfiles[next].title);
   };
 
   const handleTerminalSubmit = (e) => {
@@ -258,67 +270,61 @@ export default function Skills() {
             <div className="panel-content animate-fade">
               <div className="figma-artboard-wrapper">
                 <div className="figma-frame-title-tag">
-                  MacBook Air - 1 <span className="collab-indicator"><FiUsers /> 2 activos (Edgar & Erika)</span>
+                  <span className="collab-indicator"><FiUsers /> 2 cursores activos (Edgar & Usuario)</span>
                 </div>
 
                 <div className="figma-frame-canvas">
-                  {/* Cursor Edgar (Sincronizado al título) */}
+                  {/* Cursor Edgar (Editando Texto) */}
                   <div
-                    className="figma-animated-cursor edgar"
+                    className={`figma-animated-cursor edgar ${edgarClicking ? "clicking" : ""}`}
                     style={{ top: `${currentProfile.edgarPos.y}%`, left: `${currentProfile.edgarPos.x}%` }}
                   >
                     <FiMousePointer className="cursor-icon" />
-                    <span className="cursor-badge">Edgar</span>
+                    <span className="cursor-badge">Edgar (Editing)</span>
                   </div>
-
-                  {/* Cursor Erika (Sincronizado a las etiquetas o inspección) */}
+                <div className="window-name">Habilidades</div>
                   <div
-                    className="figma-animated-cursor erika"
+                    className={`figma-animated-cursor erika ${erikaClicking ? "clicking" : ""}`}
                     style={{ top: `${currentProfile.erikaPos.y}%`, left: `${currentProfile.erikaPos.x}%` }}
                   >
                     <FiMousePointer className="cursor-icon" />
-                    <span className="cursor-badge">Erika</span>
+                    <span className="cursor-badge">Usuario (Inspecting)</span>
                   </div>
 
-                  {/* Guías del frame */}
+                  {/* Guías de selección de Figma */}
                   <div className="figma-handle tl"></div>
                   <div className="figma-handle tr"></div>
                   <div className="figma-handle bl"></div>
                   <div className="figma-handle br"></div>
 
-                  {/* TarjetaInteractiva con evento onClick para alternar habilidades manualmente */}
                   <div className="figma-inner-content">
                     <div
                       className="figma-component-card figma-interactive-card"
-                      onClick={handleFigmaCardClick}
-                      title="Haz clic para cambiar de habilidad interactivamente"
+                      onClick={handleCardClick}
                     >
                       <div className="figma-card-header-row">
                         <span className="figma-chip-label">{currentProfile.chip}</span>
-                        <span className="figma-auto-layout-badge">⚡ Click para cambiar</span>
+                        <span className="figma-auto-layout-badge">⚡ Live Collab</span>
                       </div>
-                      <h4>
+                      <h4 className={edgarClicking ? "highlight-editing" : ""}>
                         {typedTitle}
                         <span className="figma-caret">|</span>
                       </h4>
                       <p className="muted">{currentProfile.desc}</p>
                       <div className="figma-spec-tags">
-                        {currentProfile.tags.map((tag) => (
-                          <span key={tag}>{tag}</span>
+                        {currentProfile.tags.map((tag, idx) => (
+                          <span
+                            key={tag}
+                            className={erikaClicking && idx === 0 ? "highlight-tag" : ""}
+                          >
+                            {tag}
+                          </span>
                         ))}
                       </div>
                     </div>
                   </div>
 
-                  <div className="figma-resolution-pill">1280 × 832 (Interactive Canvas)</div>
-                </div>
-
-                {/* Toolbar */}
-                <div className="figma-floating-toolbar">
-                  <button className={`tool-btn ${figmaTool === "select" ? "active" : ""}`} title="Move"><FiMousePointer /></button>
-                  <button className={`tool-btn ${figmaTool === "frame" ? "active" : ""}`} title="Frame"><FiLayers /></button>
-                  <button className={`tool-btn ${figmaTool === "rect" ? "active" : ""}`} title="Rectangle"><FiSquare /></button>
-                  <button className={`tool-btn ${figmaTool === "text" ? "active" : ""}`} title="Text"><FiType /></button>
+                  <div className="figma-resolution-pill">1280 × 832</div>
                 </div>
               </div>
             </div>
