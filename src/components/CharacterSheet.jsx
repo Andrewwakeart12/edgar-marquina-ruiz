@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { profile, experience, about } from "../data/content";
 import {
   FiArrowLeft,
@@ -43,8 +43,10 @@ export default function CharacterSheet() {
       <header className="obsiryte-topbar">
         <div className="left-controls">
           <button
+            type="button"
             className="icon-btn back-btn"
             title="Volver al Inicio"
+            aria-label="Volver al Inicio"
             onClick={() =>
               window.dispatchEvent(
                 new CustomEvent("navigate", { detail: "home" })
@@ -62,9 +64,11 @@ export default function CharacterSheet() {
         {/* Theme Toggle Button Added */}
         <div className="right-controls">
           <button
+            type="button"
             className="icon-btn theme-toggle-btn"
             onClick={toggleTheme}
             title={`Cambiar a modo ${theme === "dark" ? "claro" : "oscuro"}`}
+            aria-label={`Cambiar a modo ${theme === "dark" ? "claro" : "oscuro"}`}
           >
             {theme === "dark" ? <FiSun /> : <FiMoon />}
           </button>
@@ -97,7 +101,7 @@ export default function CharacterSheet() {
                 <span className="chip">
                   {profile.title} <FiX className="chip-remove" />
                 </span>
-                <button className="chip-add-btn">
+                <button type="button" className="chip-add-btn">
                   <FiPlus /> Añadir rol
                 </button>
               </div>
@@ -127,7 +131,7 @@ export default function CharacterSheet() {
             </div>
 
             <div className="card-footer-action">
-              <button className="quitar-ficha-btn">Quitar ficha</button>
+              <button type="button" className="quitar-ficha-btn">Quitar ficha</button>
             </div>
           </div>
 

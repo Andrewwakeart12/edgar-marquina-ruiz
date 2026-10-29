@@ -1,4 +1,3 @@
-import React from "react";
 import { profile } from "../data/content";
 import profileImg from "../assets/images/edgar.jpg";
 import {
@@ -9,11 +8,9 @@ import {
   FiMail,
   FiLinkedin,
   FiGithub,
-  FiMessageSquare,
-  FiSend,
-  FiCopy
+  FiMessageSquare
 } from "react-icons/fi";
-import "./Hero.css";
+import "./Home.css";
 
 export default function Home() {
   // Format WhatsApp URL with a friendly pre-filled message
@@ -24,14 +21,6 @@ export default function Home() {
       "¡Hola Edgar! Vi tu portafolio y me gustaría ponerme en contacto contigo."
     )}`
     : null;
-
-  const handleCopyEmail = (e) => {
-    e.preventDefault();
-    if (profile.email) {
-      navigator.clipboard.writeText(profile.email);
-      alert("¡Correo copiado al portapapeles!");
-    }
-  };
 
   return (
     <section id="home" className="home">
@@ -59,6 +48,7 @@ export default function Home() {
           {/* Direct CTA Action Row */}
           <div className="cta">
             <button
+              type="button"
               className="btn primary"
               onClick={() =>
                 window.dispatchEvent(
@@ -76,6 +66,7 @@ export default function Home() {
                 href={`mailto:${profile.email}`}
                 className="btn secondary"
                 title="Enviar Correo Directo"
+                aria-label="Enviar correo"
               >
                 <FiMail aria-hidden="true" />
               </a>
@@ -87,6 +78,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="btn secondary"
                   title="Chat por WhatsApp"
+                  aria-label="Abrir WhatsApp"
                 >
                   <FiMessageSquare aria-hidden="true" />
                 </a>
@@ -99,23 +91,20 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="btn secondary"
                   title="Perfil LinkedIn"
+                  aria-label="Abrir LinkedIn"
                 >
                   <FiLinkedin aria-hidden="true" />
                 </a>
               )}
-            </div>
-
-            {/* Quick One-Click Contact Row */}
-            <div className="quick-connect-bar">
-
 
               {profile.github && (
                 <a
                   href={profile.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="quick-btn github-btn"
+                  className="btn secondary"
                   title="Perfil GitHub"
+                  aria-label="Abrir GitHub"
                 >
                   <FiGithub aria-hidden="true" />
                 </a>

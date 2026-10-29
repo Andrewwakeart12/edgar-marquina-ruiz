@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import "./TimelineItem.css";
 
 export default function TimelineItem({ title, subtitle, period, bullets, description }) {
   return (

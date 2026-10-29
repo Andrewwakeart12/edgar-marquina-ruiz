@@ -3,7 +3,8 @@
   border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
   background: color-mix(in srgb, var(--text) 6%, transparent);
   color: var(--text);
-  padding: 0.4rem 0.8rem;
+  min-height: 40px;
+  padding: 0.4rem 0.9rem;
   border-radius: 999px;
   font-size: 0.9rem;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
@@ -17,9 +18,27 @@
 }
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 1.2rem;
+}
+.project-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 55%),
+    linear-gradient(135deg, var(--surface-2), color-mix(in srgb, var(--accent) 10%, var(--surface)));
+  color: var(--muted);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 @media (max-width: 640px) {
   .projects-grid { gap: 1rem; }
+  .project-image-placeholder { height: 170px; }
+}
+
+.card-content{
+  padding: 1rem;
 }

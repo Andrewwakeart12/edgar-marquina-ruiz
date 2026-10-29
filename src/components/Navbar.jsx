@@ -24,8 +24,10 @@ export default function Navbar({ active, onNavigate }) {
             return (
               <li key={l.id}>
                 <button
+                  type="button"
                   className={isActive ? "active" : ""}
                   onClick={() => onNavigate(l.id)}
+                  aria-label={l.label}
                   aria-current={isActive ? "page" : undefined}
                 >
                   <span className="label">{l.label}</span>
@@ -40,9 +42,10 @@ export default function Navbar({ active, onNavigate }) {
         EMR<span className="dinstic">.</span>
         </div>
       {/* Botón flotante de tema */}
-      <button 
-        className="floating-theme-toggle" 
-        onClick={toggle} 
+      <button
+        type="button"
+        className="floating-theme-toggle"
+        onClick={toggle}
         aria-label={theme === "light" ? "Cambiar a tema oscuro" : "Cambiar a tema claro"}
       >
         <MorphIcon 

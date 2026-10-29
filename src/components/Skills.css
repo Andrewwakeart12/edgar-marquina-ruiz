@@ -14,6 +14,7 @@
   background: var(--surface-2);
   border-bottom: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
   overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .tab-btn {
@@ -30,10 +31,18 @@
   cursor: pointer;
   transition: var(--transition);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.tab-btn:hover { color: var(--text); }
-.tab-btn.active { color: var(--text); border-bottom-color: var(--accent); background: var(--surface); }
+.tab-btn:hover {
+  color: var(--text);
+}
+
+.tab-btn.active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+  background: var(--surface);
+}
 
 .workspace-panel {
   padding: 1.2rem;
@@ -42,7 +51,7 @@
 
 .panel-grid-compact {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 1rem;
 }
 
@@ -84,7 +93,7 @@
 /* --- ESTILO FIGMA ARTBOARD / FRAME --- */
 .figma-artboard-wrapper {
   position: relative;
-  padding: 4.5rem 1rem 3rem 1rem;
+  padding: 4.5rem 1rem 3rem;
   border-radius: calc(var(--radius) - 4px);
   display: flex;
   flex-direction: column;
@@ -105,19 +114,17 @@
   position: relative;
   width: 100%;
   max-width: 680px;
-  height: 320px;
+  min-height: 340px;
+  height: auto;
   background: var(--surface);
-  border: 2px solid #1177fe; /* Color azul clásico de selección de Figma */
+  border: 2px solid #1177fe;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  overflow: unset;
-
 }
 
-/* Tiradores de las esquinas del Frame de Figma */
 .figma-handle {
   position: absolute;
   width: 10px;
@@ -126,6 +133,7 @@
   border: 2px solid #1177fe;
   border-radius: 1px;
 }
+
 .figma-handle.tl { top: -4px; left: -4px; }
 .figma-handle.tr { top: -4px; right: -4px; }
 .figma-handle.bl { bottom: -4px; left: -4px; }
@@ -165,6 +173,7 @@
 
 .figma-spec-tags {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
@@ -191,36 +200,6 @@
   border-radius: 4px;
   font-weight: 600;
 }
-
-/* Barra de herramientas flotante estilo Figma abajo */
-.figma-floating-toolbar {
-  position: absolute;
-  bottom: 1px;
-  display: flex;
-  gap: 4px;
-  background: #1e1e1e;
-  border: 1px solid #333333;
-  padding: 4px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-
-.tool-btn {
-  background: transparent;
-  border: none;
-  color: #a0a0a0;
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.tool-btn:hover { background: #2a2a2a; color: #fff; }
-.tool-btn.active { background: #1177fe; color: #fff; }
 
 /* --- TERMINAL LINUX CLI --- */
 .linux-terminal {
@@ -255,7 +234,7 @@
 .term-line pre {
   margin: 0;
   white-space: pre-wrap;
-  word-break: break-all;
+  word-break: break-word;
   font-family: inherit;
 }
 
@@ -271,14 +250,63 @@
   margin-top: 0.3rem;
 }
 
-.term-form .prompt { color: var(--accent); font-weight: bold; }
-.term-form input { background: transparent; border: none; color: var(--text); font-family: inherit; font-size: 0.82rem;  }
-.term-form input:focus { outline: none; }
+.term-form .prompt {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.term-form input {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.82rem;
+}
+
+.term-form input:focus {
+  outline: none;
+}
+
+.term-input-line {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-grow: 1;
+  font-family: inherit;
+  font-size: 0.82rem;
+}
+
+.typed-text {
+  color: var(--text);
+  white-space: pre;
+  font-family: inherit;
+}
 
 .cursor-blink {
   color: var(--accent);
   animation: blink 1s infinite;
   font-size: 0.8rem;
+  margin-left: 1px;
+}
+
+.hidden-terminal-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border: none;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: text;
+}
+
+.hidden-terminal-input:focus {
+  outline: none;
 }
 
 @keyframes blink {
@@ -286,186 +314,11 @@
   50.1%, 100% { opacity: 0; }
 }
 
-.animate-fade { animation: fade-in-up 250ms ease both; }
-
-/* --- ESTILOS DEL CURSOR Y ELEMENTOS DINÁMICOS EN FIGMA --- */
-.figma-frame-canvas {
-  position: relative;
-  min-height: 340px;
+.animate-fade {
+  animation: fade-in-up 250ms ease both;
 }
 
-.figma-animated-cursor {
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  pointer-events: none;
-  transition: top 0.7s cubic-bezier(0.25, 1, 0.5, 1), left 0.7s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.figma-animated-cursor .cursor-icon {
-  color: #1177fe;
-  fill: #1177fe;
-  font-size: 1.1rem;
-  transform: rotate(-20deg);
-}
-
-.figma-animated-cursor .cursor-badge {
-  background: #1177fe;
-  color: #ffffff;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 1px 6px;
-  border-radius: 3px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-.figma-inner-content-stack {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  max-height: 280px;
-  overflow-y: auto;
-  padding: 0.5rem;
-}
-
-.figma-caret {
-  display: inline-block;
-  color: #1177fe;
-  margin-left: 2px;
-  animation: figma-blink 0.8s infinite;
-  font-weight: 400;
-}
-
-@keyframes figma-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.animate-pop {
-  animation: popIn 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-}
-
-@keyframes popIn {
-  from {
-    opacity: 0;
-    transform: scale(0.92) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* --- ESTILOS MULTI-CURSOR FIGMA --- */
-.figma-animated-cursor {
-  position: absolute;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  pointer-events: none;
-  transition: top 0.9s cubic-bezier(0.25, 1, 0.5, 1), left 0.9s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.figma-animated-cursor.edgar .cursor-icon {
-  color: #1177fe;
-  fill: #1177fe;
-}
-.figma-animated-cursor.edgar .cursor-badge {
-  background: #1177fe;
-}
-
-.figma-animated-cursor.erika .cursor-icon {
-  color: #ec4899;
-  fill: #ec4899;
-}
-.figma-animated-cursor.erika .cursor-badge {
-  background: #ec4899;
-}
-
-.figma-animated-cursor .cursor-icon {
-  font-size: 1.1rem;
-  transform: rotate(-20deg);
-}
-
-.figma-animated-cursor .cursor-badge {
-  color: #ffffff;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 1px 6px;
-  border-radius: 3px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-.collab-indicator {
-  margin-left: 8px;
-  font-size: 0.7rem;
-  color: #ec4899;
-  background: color-mix(in srgb, #ec4899 15%, transparent);
-  padding: 1px 6px;
-  border-radius: 4px;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* Efectos visuales de fases en el Canvas */
-.figma-frame-canvas.phase-1 {
-  border-color: #ec4899;
-  box-shadow: 0 12px 32px rgba(236, 72, 153, 0.15);
-}
-
-.figma-frame-canvas.phase-2 {
-  border-color: #10b981;
-  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.15);
-}
-
-.figma-card-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.figma-auto-layout-badge {
-  font-size: 0.65rem;
-  font-family: monospace;
-  color: #10b981;
-  background: color-mix(in srgb, #10b981 12%, transparent);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-.figma-transition-card {
-  transition: all 0.4s ease-in-out;
-}
-.figma-interactive-card {
-  cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.figma-interactive-card:hover {
-  transform: translateY(-2px);
-  border-color: #1177fe;
-}
-
-.figma-animated-cursor {
-  position: absolute;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  pointer-events: none;
-  /* Transición fluida para que los cursores viajen de un punto a otro simulando movimiento real */
-  transition: top 0.8s cubic-bezier(0.25, 1, 0.5, 1), left 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* --- ESTILOS DE INTERACCIÓN DE CURSORES --- */
+/* --- CURSORES FIGMA --- */
 .figma-animated-cursor {
   position: absolute;
   z-index: 25;
@@ -476,7 +329,41 @@
   transition: top 0.7s cubic-bezier(0.25, 1, 0.5, 1), left 0.7s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Efecto de clic (escala y ondas) */
+.figma-animated-cursor .cursor-icon {
+  color: #1177fe;
+  fill: #1177fe;
+  font-size: 1.1rem;
+  transform: rotate(-20deg);
+}
+
+.figma-animated-cursor .cursor-badge {
+  background: #1177fe;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.figma-animated-cursor.edgar .cursor-icon {
+  color: #1177fe;
+  fill: #1177fe;
+}
+
+.figma-animated-cursor.edgar .cursor-badge {
+  background: #1177fe;
+}
+
+.figma-animated-cursor.erika .cursor-icon {
+  color: #ec4899;
+  fill: #ec4899;
+}
+
+.figma-animated-cursor.erika .cursor-badge {
+  background: #ec4899;
+}
+
 .figma-animated-cursor.clicking {
   transform: scale(0.85);
 }
@@ -501,7 +388,61 @@
   100% { transform: scale(2); opacity: 0; }
 }
 
-/* Resaltado visual cuando se está editando el texto */
+.figma-caret {
+  display: inline-block;
+  color: #1177fe;
+  margin-left: 2px;
+  animation: figma-blink 0.8s infinite;
+  font-weight: 400;
+}
+
+@keyframes figma-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.collab-indicator {
+  margin-left: 8px;
+  font-size: 0.7rem;
+  color: #ec4899;
+  background: color-mix(in srgb, #ec4899 15%, transparent);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.figma-card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.figma-auto-layout-badge {
+  font-size: 0.65rem;
+  font-family: monospace;
+  color: #10b981;
+  background: color-mix(in srgb, #10b981 12%, transparent);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.figma-interactive-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.figma-interactive-card:hover {
+  transform: translateY(-2px);
+  border-color: #1177fe;
+  box-shadow: 0 8px 24px rgba(17, 119, 254, 0.15);
+}
+
 .highlight-editing {
   color: #1177fe;
   text-shadow: 0 0 10px rgba(17, 119, 254, 0.3);
@@ -515,20 +456,67 @@
   transition: all 0.3s ease;
 }
 
-.figma-interactive-card {
-  cursor: pointer;
-  transition: all 0.2s ease;
+.window-name {
+  position: absolute;
+  top: -30px;
+  left: -5px;
+  color: #1177fe;
+  font-weight: bold;
 }
 
-.figma-interactive-card:hover {
-  border-color: #1177fe;
-  box-shadow: 0 8px 24px rgba(17, 119, 254, 0.15);
+@media (max-width: 900px) {
+  .skills-section {
+    width: 100%;
+  }
 }
-.window-name{
-    position: absolute;
-    top: -30px;
-    left: -5px;
-    color: #1177fe;
-    font-weight: bold;
 
+@media (max-width: 768px) {
+  .tab-btn {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.82rem;
+  }
+
+  .workspace-panel {
+    padding: 0.85rem;
+  }
+
+  .figma-artboard-wrapper {
+    padding: 3.25rem 0 2.5rem;
+  }
+
+  .figma-frame-canvas {
+    min-height: 300px;
+    padding: 1rem 0.85rem;
+  }
+
+  .figma-component-card {
+    padding: 1rem;
+  }
+
+  .figma-frame-title-tag {
+    right: 4px;
+    left: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .collab-indicator {
+    margin-left: 0;
+  }
+
+  .figma-animated-cursor .cursor-badge {
+    display: none;
+  }
+
+  .term-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  .term-body {
+    padding: 0.75rem;
+    max-height: 260px;
+  }
 }

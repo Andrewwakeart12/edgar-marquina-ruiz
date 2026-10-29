@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { skills } from "../data/content";
 import {
   FiServer,
@@ -7,10 +7,7 @@ import {
   FiActivity,
   FiCheckCircle,
   FiCommand,
-  FiSquare,
-  FiType,
   FiMousePointer,
-  FiLayers,
   FiUsers
 } from "react-icons/fi";
 import "./Skills.css";
@@ -48,6 +45,7 @@ export default function Skills() {
   
   // --- ESTADOS TERMINAL ---
   const [terminalInput, setTerminalInput] = useState("");
+  const terminalInputRef = useRef("");
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [terminalLogs, setTerminalLogs] = useState([
     { type: "sys", text: "[remote-ssh] Connecting to edgar@cachyos-station..." },
@@ -57,7 +55,6 @@ export default function Skills() {
   const terminalBodyRef = useRef(null);
 
   // --- ESTADOS FIGMA INTERACTIVO Y COLABORATIVO ---
-  const [figmaTool, setFigmaTool] = useState("text");
   const [profileIndex, setProfileIndex] = useState(0);
   const [typedTitle, setTypedTitle] = useState("");
   const [isManualOverride, setIsManualOverride] = useState(false);
@@ -77,7 +74,7 @@ export default function Skills() {
   // RUTINA AUTOMÁTICA TERMINAL
   // -------------------------------------------------------------
   useEffect(() => {
-    const isUserActive = isInputFocused || terminalInput.trim().length > 0;
+    const isUserActive = isInputFocused || terminalInputRef.current.trim().length > 0;
     if (isUserActive) return;
 
     const commandsQueue = ["docker ps", "git status", "php artisan queue:work --once", "systemctl status server"];
@@ -86,7 +83,8 @@ export default function Skills() {
     const simulateHumanTyping = async (commandString) => {
       for (let i = 0; i <= commandString.length; i++) {
         if (isCancelled || isInputFocused) return;
-        setTerminalInput(commandString.substring(0, i));
+        terminalInputRef.current = commandString.substring(0, i);
+        setTerminalInput(terminalInputRef.current);
         await new Promise((r) => setTimeout(r, Math.random() * 80 + 60));
       }
       await new Promise((r) => setTimeout(r, 400));
@@ -108,6 +106,7 @@ export default function Skills() {
         { type: "cmd", text: `$ ${commandString}` },
         { type: "out", text: response }
       ]);
+      terminalInputRef.current = "";
       setTerminalInput("");
     };
 
@@ -138,7 +137,6 @@ export default function Skills() {
         const profile = figmaProfiles[profileIndex];
         
         // 1. Edgar hace clic para empezar a editar el texto
-        setFigmaTool("text");
         setEdgarClicking(true);
         await delay(300);
         setEdgarClicking(false);
@@ -194,6 +192,7 @@ export default function Skills() {
       response = "Laravel Framework 11.x\n  route:list     List all registered routes\n  queue:work     Start processing jobs";
     } else if (cmd === "clear") {
       setTerminalLogs([]);
+      terminalInputRef.current = "";
       setTerminalInput("");
       return;
     } else if (cmd === "help") {
@@ -205,6 +204,7 @@ export default function Skills() {
       { type: "cmd", text: `$ ${terminalInput}` },
       { type: "out", text: response }
     ]);
+    terminalInputRef.current = "";
     setTerminalInput("");
   };
 
@@ -221,18 +221,21 @@ export default function Skills() {
       <div className="skills-workspace">
         <div className="workspace-tabs">
           <button
+            type="button"
             className={`tab-btn ${activeTab === "backend" ? "active" : ""}`}
             onClick={() => setActiveTab("backend")}
           >
             <FiServer /> Backend & Servidor
           </button>
           <button
+            type="button"
             className={`tab-btn ${activeTab === "frontend" ? "active" : ""}`}
             onClick={() => setActiveTab("frontend")}
           >
             <FiLayout /> Frontend (Figma Frame)
           </button>
           <button
+            type="button"
             className={`tab-btn ${activeTab === "ops" ? "active" : ""}`}
             onClick={() => setActiveTab("ops")}
           >
@@ -356,7 +359,10 @@ export default function Skills() {
                         value={terminalInput}
                         onFocus={() => setIsInputFocused(true)}
                         onBlur={() => setIsInputFocused(false)}
-                        onChange={(e) => setTerminalInput(e.target.value)}
+                        onChange={(e) => {
+                          terminalInputRef.current = e.target.value;
+                          setTerminalInput(e.target.value);
+                        }}
                       />
                     </div>
                   </form>

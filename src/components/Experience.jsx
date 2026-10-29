@@ -1,6 +1,5 @@
 import { experience, education } from "../data/content";
 import TimelineItem from "./TimelineItem";
-import "./Experience.css";
 
 export default function Experience() {
   return (

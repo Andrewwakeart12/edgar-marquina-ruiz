@@ -1,0 +1,26 @@
+.link_to_personal_character_sheet {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.quick-connect-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bracket {
+  opacity: 0.1;
+}
+
+@media (max-width: 600px) {
+  .quick-connect-buttons {
+    width: 100%;
+  }
+
+  .quick-connect-buttons .btn {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+}

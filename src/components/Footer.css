@@ -3,3 +3,9 @@
   color: var(--muted); font-size: 0.85rem;
   border-top: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
 }
+
+@media (max-width: 1024px) {
+  .footer {
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+  }
+}
